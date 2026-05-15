@@ -9,6 +9,7 @@ interface UTMParams {
   name: string;
   term: string;
   content: string;
+  adCode: string;
 }
 
 interface UTMFormProps {
@@ -53,6 +54,7 @@ export const UTMForm: React.FC<UTMFormProps> = ({ onGenerate }) => {
     name: '',
     term: '',
     content: '',
+    adCode: '',
   });
 
   const [generatedUrl, setGeneratedUrl] = useState('');
@@ -73,6 +75,7 @@ export const UTMForm: React.FC<UTMFormProps> = ({ onGenerate }) => {
       if (params.name) searchParams.set('utm_campaign', params.name);
       if (params.term) searchParams.set('utm_term', params.term);
       if (params.content) searchParams.set('utm_content', params.content);
+      if (params.adCode) searchParams.set('ad_code', params.adCode);
 
       urlObj.search = searchParams.toString();
       setGeneratedUrl(urlObj.toString());
@@ -98,6 +101,7 @@ export const UTMForm: React.FC<UTMFormProps> = ({ onGenerate }) => {
       name: '',
       term: '',
       content: '',
+      adCode: '',
     });
   };
 
@@ -186,7 +190,7 @@ export const UTMForm: React.FC<UTMFormProps> = ({ onGenerate }) => {
           <p className="mt-1 text-xs text-slate-500">Identify the paid keywords</p>
         </div>
 
-        <div className="md:col-span-2">
+        <div>
           <label className="label-text">
             Campaign Content
             <Tooltip text="Used to differentiate similar content, or links within the same ad (e.g. logolink vs textlink)." />
@@ -199,6 +203,21 @@ export const UTMForm: React.FC<UTMFormProps> = ({ onGenerate }) => {
             onChange={(e) => setParams({ ...params, content: e.target.value })}
           />
           <p className="mt-1 text-xs text-slate-500">Use to differentiate ads</p>
+        </div>
+
+        <div>
+          <label className="label-text">
+            Ad Code
+            <Tooltip text="Used to identify the specific ad or campaign ID (e.g. ad_12345)." />
+          </label>
+          <input
+            type="text"
+            className="input-field"
+            placeholder="ad_12345"
+            value={params.adCode}
+            onChange={(e) => setParams({ ...params, adCode: e.target.value })}
+          />
+          <p className="mt-1 text-xs text-slate-500">Unique identifier for the ad</p>
         </div>
       </div>
 
